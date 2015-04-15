@@ -1,5 +1,7 @@
 # Overview
 
+[![Join the chat at https://gitter.im/lefou/maven-polyglot](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lefou/maven-polyglot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [Polyglot for Maven](http://github.com/tesla/tesla-polyglot/) is a set of extensions for `Maven 3.3.1+` that allows the POM model to be written in dialects other than XML. Several of the dialects also allow inlined plugins: the Ruby, Groovy and Scala dialects allow this.
 
 Here's an example POM written in the Ruby dialect:
