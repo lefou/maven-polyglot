@@ -10,17 +10,17 @@ package org.sonatype.maven.polyglot.scala
 import org.specs2.mutable._
 import org.specs2.runner.JUnitRunner
 import org.junit.runner.RunWith
-import java.io.{StringWriter, InputStream, File}
+import java.io.{ StringWriter, InputStream, File }
 import scala.collection.JavaConverters._
 import org.apache.maven.model.building.{ ModelSource2, ModelProcessor }
 import org.specs2.specification.AfterEach
 import org.apache.maven.model.Model
 import org.codehaus.plexus.util.IOUtil
 import java.util.Collections
-import org.sonatype.maven.polyglot.execute.{ExecuteContext, ExecuteTask, ExecuteManager}
+import org.sonatype.maven.polyglot.execute.{ ExecuteContext, ExecuteTask, ExecuteManager }
 import java.util
-import org.sonatype.maven.polyglot.scala.model.{Build => ScalaBuild, Model => ScalaRawModel, Task => ScalaModelTask}
-import scala.collection.{immutable, mutable}
+import org.sonatype.maven.polyglot.scala.model.{ Build => ScalaBuild, Model => ScalaRawModel, Task => ScalaModelTask }
+import scala.collection.{ immutable, mutable }
 import org.apache.maven.project.MavenProject
 
 @RunWith(classOf[JUnitRunner])
@@ -35,7 +35,7 @@ class ScalaModelReaderWriterSpec extends Specification with AfterEach {
     def getLocation: String = evalFile.getCanonicalPath
 
     def getLocationURI(): java.net.URI = evalFile.getCanonicalFile().toURI()
-    
+
     def getRelatedSource(relPath: String): ModelSource2 = ??? // ok for this test case
   }
 

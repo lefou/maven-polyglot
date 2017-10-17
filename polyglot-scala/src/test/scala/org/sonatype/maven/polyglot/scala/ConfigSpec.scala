@@ -19,6 +19,7 @@ import scala.collection.immutable
 class ConfigSpec extends Specification {
 
   "The config" should {
+
     "should convert from an xml doc to a config" in {
       val xml = new Xpp3Dom("configuration")
       val child1 = new Xpp3Dom("key1")
@@ -49,6 +50,7 @@ class ConfigSpec extends Specification {
       ea.head._1 must_== "@attr4"
       ea.head._2.get.asInstanceOf[String] must_== "attrValue4"
     }
+
     "should convert from a config to an xml doc" in {
       val config = new Config(
         immutable.Seq(
@@ -87,6 +89,7 @@ class ConfigSpec extends Specification {
       child4Attr must_== "attrValue4"
       child4.getChildCount must_== 0
     }
+
     "should permit elements to be assigned via dynamic apply" in {
       val config = Config(key1 = Config(key2 = "value2", key3 = None, `@key4` = "attrValue4"))
 
@@ -102,6 +105,22 @@ class ConfigSpec extends Specification {
       e(1)._2 must beNone
       e(2)._1 must_== "@key4"
       e(2)._2.get.asInstanceOf[String] must_== "attrValue4"
+    }
+
+    "convert a configuration to XML with an empty config block" in {
+      val config = new Config(immutable.Seq(
+        "key1" -> Some(Config.Empty)
+      ))
+
+      val c = new ConvertibleScalaConfig(config)
+      val xml = c.asJava
+
+      xml.getName must_== "configuration"
+      xml.getChildCount must_== 1
+      val child1 = xml.getChild(0)
+      child1.getName must_== "key1"
+      child1.getValue must beNull
+      child1.getChildCount must_== 0
     }
   }
 }

@@ -21,11 +21,24 @@ import scala.language.postfixOps
  *   c: immutable.Seq[(String, Any)] = List((a,1), (b,hi))
  * }}}
  */
-class Config(val elements: immutable.Seq[(String, Option[Any])])
+class Config(val elements: immutable.Seq[(String, Option[Any])]) {
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Config]
+  override def equals(other: Any): Boolean = other match {
+    case that: Config =>
+      (that canEqual this) &&
+        elements == that.elements
+    case _ => false
+  }
+  override def hashCode(): Int = elements.hashCode()
+  override def toString(): String = getClass.getSimpleName + "(" + elements + ")"
+  def isEqual: Boolean = elements.isEmpty
+}
 
 object Config extends Dynamic {
 
-  object Optional {
+  val Empty = new Config(immutable.Seq.empty)
+  
+  private object Optional {
     def unapply(x: Any): Some[Option[Any]] = Some(x match {
       case x: Option[_] => x
       case _ => Option(x)
@@ -40,7 +53,6 @@ object Config extends Dynamic {
     else throw new UnsupportedOperationException
 
 }
-
 
 import org.sonatype.maven.polyglot.scala.ScalaPrettyPrinter._
 
@@ -60,7 +72,6 @@ class PrettiedConfig(c: Config) {
     `object`("Config", args.toList)
   }
 }
-
 
 class ConvertibleMavenConfig(mc: Object) {
 
