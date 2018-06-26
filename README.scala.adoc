@@ -1,0 +1,27 @@
+= Polyglot Scala Extension
+
+== Best Practices
+
+=== Use shared include files for versions and other settings
+
+One unique feature of the Polyglot Scala Extension is the include macro.
+
+.`pom.scala`: Include code from the shared file `mvn-shared.scala`
+[source,scala]
+----
+//#include mvn-shared.scala
+----
+
+By placing the project version number in a shared scala file and including it into each project, you have to only edit one central place when the version number needs to be modified.
+
+Also, the include process is completely transparent to Maven.
+When your artifact gets installed and deployed, the version is no longer a variable, which makes later resolve processes more robust.
+
+TIP: Avoid Maven parent poms completely, by using include files for dependency and plugin definitions.
+
+=== Replace Maven parent poms with include files
+
+Instead of defining and referencing parent poms, you should consider to define an object which produces the desired project model with all its settings and potential defaults.
+This not only makes the reasoning about your project easier, it also avoid various issues Maven has with parent poms.
+It also speeds up the build and produces less artifacts to download.
+
